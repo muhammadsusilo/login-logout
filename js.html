@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      #root {
+        background-color: rgb(154, 0, 0);
+        padding: 10px;
+        font-size: 2em;
+        text-align: center;
+        color: white;
+        height: 100vh;
+      }
+      .manager {
+        text-align: center;
+        color: gray;
+        padding: 10px;
+        background-color: green;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root">
+      <input type="text" placeholder="username" id="usernameInput" />
+      <input type="password" placeholder="password" id="passwordInput" />
+      <button>Login</button>
+      <button>LogOut</button>
+      <br />
+      <br />
+      <h1 id="admin">Login sebagai admin</h1>
+      <h1 id="user">Terima kasih telah login</h1>
+      <div class="manager">
+        <h1>Dasboard Manager</h1>
+        <p>Manager</p>
+      </div>
+    </div>
+    <script>
+      const tombol = document.getElementsByTagName("button")[0];
+      const usernameInput = document.getElementById("usernameInput");
+      const passwordInput = document.getElementById("passwordInput");
+      const buttonKlik = document.getElementsByTagName("button")[0];
+      const buttonKeluar = document.getElementsByTagName("button")[1];
+      const manager = document.getElementsByClassName("manager")[0];
+
+      const admin = document.getElementById("admin");
+      const user = document.getElementById("user");
+
+      admin.style.display = "none";
+      user.style.display = "none";
+      buttonKeluar.style.display = "none";
+      manager.style.display = "none";
+
+      tombol.addEventListener("click", function () {
+        // console.info(
+        //   `muncul username ${usernameInput.value}, dan password ${passwordInput.value}`
+        // );
+        localStorage.setItem("userName", usernameInput.value);
+
+        if (
+          usernameInput.value == "admin",
+          passwordInput.value == "admin123"
+        ) {
+          // console.info("Kamu adalah admin");
+          usernameInput.style.display = "none";
+          passwordInput.style.display = "none";
+          buttonKlik.style.display = "none";
+          buttonKeluar.style.display = "block";
+
+          localStorage.setItem("role", "admin");
+          user.style.display = "none";
+          manager.style.display = "none";
+          admin.style.display = "block";
+        } 
+        else if(
+          usernameInput.value =="manager", passwordInput.value == "manager123"
+        ){
+          usernameInput.style.display = "none";
+          passwordInput.style.display = "none";
+          buttonKlik.style.display = "none";
+          buttonKeluar.style.display = "block";
+
+          localStorage.setItem("role", "manager");
+          user.style.display = "none";
+          admin.style.display = "none";
+          manager.style.display = "block";
+        }  
+         else {
+          // console.info("Kamu adalah user");
+          usernameInput.style.display = "none";
+          passwordInput.style.display = "none";
+          buttonKlik.style.display = "none";
+          buttonKeluar.style.display = "block";
+
+          localStorage.setItem("role", "user");
+          admin.style.display = "none";
+          // manager.style.display = "none";
+          user.style.display = "block";
+        }
+      });
+
+      if (localStorage.getItem("userName")) {
+        usernameInput.style.display = "none";
+        passwordInput.style.display = "none";
+        buttonKlik.style.display = "none";
+        buttonKeluar.style.display = "block";
+
+        if (localStorage.getItem("role") == "admin") {
+          user.style.display = "none";
+          admin.style.display = "block";
+        } else {
+          admin.style.display = "none";
+          user.style.display = "block";
+        }
+      }
+
+      buttonKeluar.addEventListener("click", function () {
+        localStorage.clear();
+        location.reload();
+      });
+    </script>
+  </body>
+</html>
